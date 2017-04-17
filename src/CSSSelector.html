@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .sidebar-menu li [mname*="地图"] {
+            box-shadow: 2px 4px 6px #000;
+        }
+
+        li {
+            display: block;
+        }
+    </style>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
+    </script>
+</head>
+
+<body>
+<div id="sidenav">
+    <ul class="sidebar-menu">
+        <li class="header">主菜单</li>
+        <li class="linkli"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-globe"></i><span>地图概览</span></a></li>
+        <li class="treeview" mname="设备管理"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-microchip"></i><span>设备管理</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+            <ul class="treeview-menu">
+                <li class="linkli" mname="设备概况"><a href="javascript:;" onclick="openLink('/front/pages/device/overview.html', this)"><i class="fa fa-circle-o"></i><span>设备概况</span></a></li>
+                <li class="linkli" mname="设备详情"><a href="javascript:;" onclick="openLink('/front/pages/device/blower.jsp', this)"><i class="fa fa-circle-o"></i><span>设备详情</span></a></li>
+            </ul>
+        </li>
+        <li class="treeview"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-wrench"></i><span>维护管理</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+            <ul class="treeview-menu">
+                <li class="treeview"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-circle-o"></i><span>日常检修</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/maintenance/daily.html', this)"><i class="fa fa-circle-o"></i><span>计划列表</span></a></li>
+                        <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/maintenance/daily-mass.html', this)"><i class="fa fa-circle-o"></i><span>制定计划</span></a></li>
+                    </ul>
+                </li>
+                <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/maintenance/breakdown.html', this)"><i class="fa fa-circle-o"></i><span>故障维修</span></a></li>
+            </ul>
+        </li>
+        <li class="treeview"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-calendar-check-o"></i><span>巡检管理</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+            <ul class="treeview-menu">
+                <li class="treeview"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-circle-o"></i><span>巡检计划</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/route/plan.html', this)"><i class="fa fa-circle-o"></i><span>计划列表</span></a></li>
+                        <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/route/plan-mass.html', this)"><i class="fa fa-circle-o"></i><span>制定计划</span></a></li>
+                    </ul>
+                </li>
+                <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/route/user.html', this)"><i class="fa fa-circle-o"></i><span>巡检用户APP管理</span></a></li>
+                <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/route/model.html', this)"><i class="fa fa-circle-o"></i><span>巡检路线模板管理</span></a></li>
+            </ul>
+        </li>
+        <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/emergency/emergency.jsp', this)"><i class="fa fa-fire-extinguisher"></i><span>应急预案</span></a></li>
+        <li class="treeview"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-bar-chart"></i><span>报表统计</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+            <ul class="treeview-menu">
+                <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/charts/example.html', this)"><i class="fa fa-circle-o"></i><span>模拟量历史数据</span></a></li>
+                <li class="linkli"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-circle-o"></i><span>开关量历史数据</span></a></li>
+                <li class="linkli"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-circle-o"></i><span>报警记录</span></a></li>
+                <li class="linkli"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-circle-o"></i><span>操作记录</span></a></li>
+            </ul>
+        </li>
+        <li class="treeview"><a href="javascript:;" onclick="openLink('', this)"><i class="fa fa-tasks"></i><span>决策分析</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+            <ul class="treeview-menu">
+                <li class="linkli"><a href="javascript:;" onclick="openLink('/front/pages/analysis/eptsafeanalysis.html', this)"><i class="fa fa-circle-o"></i><span>设备维护分析</span></a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<input type="text" name="id" id="menu">
+</body>
+<script>
+    $(function() {
+        var eleStyle2 = document.createElement("style");
+        document.querySelector("head").appendChild(eleStyle2);
+        document.getElementById("menu").addEventListener("keyup", function () {
+            console.log("up "+this.value)
+            var val = this.value.trim().toLowerCase();
+            if (val !== '') {
+                eleStyle2.innerHTML = '.sidebar-menu li:not([mname*="' + this.value + '"]) {display:none}';
+            } else {
+                eleStyle2.innerHTML = '';
+            }
+        });
+    })
+</script>
+
+</html>
